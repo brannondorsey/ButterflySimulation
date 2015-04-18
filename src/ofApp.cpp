@@ -16,6 +16,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     butterfly.update();
+    ofLogNotice("ofApp::update") << "Butterfly homing: " << butterfly.isHoming();
 }
 
 //--------------------------------------------------------------
@@ -29,10 +30,6 @@ void ofApp::draw(){
     
     butterfly.draw();
     camera.end();
-    
-    ofSetColor(0);
-    ofVec3f pos = butterfly.getPosition();
-    ofDrawSphere(pos.x, pos.y, 100);
 }
 
 //--------------------------------------------------------------
@@ -43,6 +40,26 @@ void ofApp::keyPressed(int key){
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 
+    if (key == OF_KEY_LEFT)
+    {
+        butterfly.homeTo(camera.screenToWorld(ofVec3f(-50, 0, 0)));
+    }
+    else if (key == OF_KEY_RIGHT)
+    {
+        butterfly.homeTo(camera.screenToWorld(ofVec3f(50, 0, 0)));
+    }
+    else if (key == OF_KEY_UP)
+    {
+        butterfly.homeTo(camera.screenToWorld(ofVec3f(0, 50, 0)));
+    }
+    else if (key == OF_KEY_DOWN)
+    {
+        butterfly.homeTo(camera.screenToWorld(ofVec3f(0, -50, 0)));
+    }
+    else if (key == OF_KEY_RETURN)
+    {
+        butterfly.homeTo(camera.screenToWorld(ofVec3f::zero()));
+    }
 }
 
 //--------------------------------------------------------------
@@ -61,7 +78,7 @@ void ofApp::mousePressed(int x, int y, int button){
     if (button == 2)
     {
         ofLogNotice("ofApp::mousePressed") << "Homing butterfly";
-        butterfly.homeTo(camera.screenToWorld(ofVec3f(ofGetMouseX(), ofGetMouseY(), 0)));
+        butterfly.homeTo(camera.screenToWorld(ofVec3f(ofGetMouseX(), ofGetMouseY(), 50)));
     }
 }
 

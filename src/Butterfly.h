@@ -10,9 +10,9 @@
 #define __ButterflyTest__Butterfly__
 
 #include "ofMain.h"
-#include "ofxTween.h"
 
-class Butterfly{
+class Butterfly
+{
     
 public:
     
@@ -24,19 +24,26 @@ public:
     void draw();
     void homeTo(const ofVec3f& position);
     void setPosition(const ofVec3f& position);
+    void applyForce(const ofVec3f& force);
+    
+    bool isHoming();
+    bool isInAir();
     
     ofVec3f getPosition();
     
 protected:
     
-    bool _homing;
-    bool _inAir;
+    void _steer();
+    
+    bool _bHoming;
+    bool _bInAir;
     
     float _maxWingSpread;
     float _maxFlapSpeed;
     float _wingFlapDir;
     float _curWingTilt;
     float _maxSpeed;
+    float _maxForce;
     
     ofVec2f _size;
     ofVec3f _destination;
@@ -47,9 +54,7 @@ protected:
     ofImage _image;
     ofPlanePrimitive _wing1;
     ofPlanePrimitive _wing2;
-    
-    ofxTween _homeTween;
-    ofxEasingLinear _easingLinear;
+    ofNode _body;
 };
 
 #endif /* defined(__ButterflyTest__Butterfly__) */
